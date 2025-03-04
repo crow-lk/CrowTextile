@@ -21,6 +21,6 @@ class Roll extends Model
     //relationship with color
     public function color()
     {
-        return $this->belongsTo(Color::class, 'color_id');
+        return $this->belongsTo(Colors::class, 'color_id');
     }
 }
