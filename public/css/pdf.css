@@ -1,0 +1,170 @@
+html,
+body {
+    height: 100%; /* Ensure the body takes the full height of the viewport */
+    margin: 0; /* Remove default margin */
+}
+
+body {
+    font-family: "Open Sans", sans-serif;
+    background-image: url("../images/bg.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    color: #333;
+}
+
+
+
+.container {
+    display: flex;
+    padding-left: 60px;
+    padding-right: 60px;
+    width: 100%;
+    margin-top: 260px;
+}
+
+.name {
+    font-size: 24px;
+}
+
+.header {
+    margin-bottom: 10px;
+}
+
+.line {
+    margin-top: 160px;
+}
+
+.logo {
+    top: 30px;
+    left: 30px;
+    height: 200px;
+    width: 200px;
+    position: fixed;
+}
+
+.inv {
+    font-family: Arial, sans-serif;
+    font-size: 40px;
+    font-weight: bold;
+    top: 40px;
+    right: 160px;
+    position: fixed;
+    text-align: center;
+}
+
+.sub {
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    top: 110px;
+    right: 210px;
+    position: fixed;
+    text-align: center;
+}
+
+.sub1 {
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    top: 130px;
+    right: 250px;
+    position: fixed;
+    text-align: center;
+}
+
+.right {
+    right: 60px;
+    position: fixed;
+    font-size: 11px;
+    text-align: right;
+}
+
+.left {
+    position: fixed;
+    font-size: 11px;
+}
+
+.left p {
+    margin: 5px 0;
+}
+
+table {
+    width: 85%;
+    border-collapse: collapse;
+    margin-top: 80px;
+    margin-left: 60px;
+}
+
+table,
+th,
+td {
+    border: 1px solid #ddd;
+}
+
+th,
+td {
+    padding: 5px;
+}
+
+th {
+    background-color: black;
+    color: white;
+}
+
+.new {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.total {
+    margin-left: 40px;
+    margin-right: 40px;
+    padding: 5px;
+    background-color: #ddd;
+    color: black;
+    font-size: 12px;
+    font-weight: bold;
+    text-align: right;
+}
+
+.text1 {
+    position: fixed;
+    top: 910px;
+    color: black;
+    margin-left: 40px;
+}
+
+.text2 {
+    position: fixed;
+    top: 980px;
+    color: black;
+    margin-left: 40px;
+}
+
+.h1 {
+    font-size: 14px;
+    line-height: 0.5;
+}
+
+.p1 {
+    font-size: 12px;
+    line-height: 0.5;
+}
+
+.icon {
+    height: 10px;
+    width: 10px;
+}
+
+.float-container {
+    overflow: hidden; /* Clear floats */
+    color: white;
+    margin-left: 260px;
+    margin-top: 100;
+}
+
+.float-item {
+    float: left; /* Float items to the left */
+    margin-right: 20px; /* Space between items */
+}
