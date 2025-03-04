@@ -49,7 +49,9 @@
                         <tr>
                             <td style="width:10%; text-align: center; font-size: 11px;"></td>
                             <td style="width:40%; text-align: right; font-size: 11px;">{{ $part->description ?? 'N/A' }} - {{ $part->price ?? 'N/A' }}</td>
-                            <td colspan="3" style="text-align: right; font-size: 11px;"></td>
+                            <td style="width:20%; text-align: center; font-size: 11px;"></td>
+                            <td style="width:10%; text-align: center; font-size: 11px;"></td>
+                            <td style="width:20%; text-align: center; font-size: 11px;"></td>
                         </tr>
                     @endforeach
             @endforeach
@@ -69,6 +71,14 @@
             @endif
         </tbody>
     </table>
+    <div class="footer">
+        <div class="leftf">
+            <p>DELIVERY BY</p>
+        </div>
+        <div class="rightf">
+            <p>RECIEVED BY</p>
+        </div>
+    </div>
     </div>
 </body>
 </html>
