@@ -36,39 +36,52 @@ body {
 }
 
 .logo {
-    top: 30px;
-    left: 30px;
-    height: 200px;
-    width: 200px;
+    top: 50px;
+    left: 70px;
+    height: 180px;
+    width: 180px;
     position: fixed;
 }
 
 .inv {
-    font-family: Arial, sans-serif;
+    font-family: 'Times New Roman', Times, serif;
+    top: 50px;
+    right: 150px;
     font-size: 40px;
-    font-weight: bold;
-    top: 40px;
-    right: 220px;
     position: fixed;
     text-align: center;
 }
 
 .sub {
-    font-family: Arial, sans-serif;
-    font-size: 16px;
+    top: 120px;
+    right: 205px;
     font-weight: bold;
-    top: 110px;
-    right: 270px;
     position: fixed;
+    font-size: 16px;
+    font-style: italic;
     text-align: center;
+}
+
+.p3 {
+    font-family: Arial, sans-serif;
+    color: black;
+    font-size: 14px;
+    text-align: left;
+}
+
+.p4 {
+    font-family: Arial, sans-serif;
+    color: black;
+    font-size: 12px;
+    text-align: left;
 }
 
 .sub1 {
     font-family: Arial, sans-serif;
-    font-size: 16px;
+    font-size: 12px;
     font-weight: bold;
-    top: 130px;
-    right: 310px;
+    top: 150px;
+    right: 100px;
     position: fixed;
     text-align: center;
 }
@@ -152,22 +165,33 @@ th {
 
 .rightf {
     right: 150px;
+    top: 1050px;
     position: fixed;
-    font-size: 16px;
+    font-size: 12px;
     text-align: right;
 }
 
 .leftf {
     position: fixed;
-    font-size: 16px;
+    left: 150px;
+    top: 1050px;
+    font-size: 12px;
     text-align: right;
 }
 
-.footer {
-    display: flex;
-    padding-left: 150px;
-    padding-right: 150px;
-    width: 100%;
-    margin-top: 370px;
+.leftl {
+    position: fixed;
+    left: 80px;
+    top: 1030px;
+    font-size: 14px;
+    text-align: right;
+}
+
+.rightl {
+    right: 80px;
+    top: 1030px;
+    position: fixed;
+    font-size: 14px;
+    text-align: right;
 }
 

@@ -10,10 +10,10 @@
 <body>
     <div class="box">
     <div class="header">
-        {{-- <img src="images/logo1.png" alt="logo" class="logo"> --}}
+        <img src="images/logo.png" alt="logo" class="logo">
         <p class="inv">DINULA FASHION</p>
         <p class="sub">The art of the Kids Garments...</p>
-        <p class="sub1">BORALASGAMUWA</p>
+        <p class="sub1">Boralasgamuwa | E-mail: <u>dinulafashion753@gmail.com</u> | Tel: +94 777 189 978</p>
     </div>
     <div class="container">
         <div class="left">
@@ -55,7 +55,28 @@
                         </tr>
                     @endforeach
             @endforeach
+            @if(($index + 1) % 4 == 0)
+                <tr>
+                    <td style="width:10%; text-align: center; font-size: 11px; height: 12px;"></td>
+                    <td style="width:40%; text-align: right; font-size: 11px; height: 12px;"></td>
+                    <td style="width:20%; text-align: center; font-size: 11px; height: 12px;"></td>
+                    <td style="width:10%; text-align: center; font-size: 11px; height: 12px;"></td>
+                    <td style="width:20%; text-align: center; font-size: 11px; height: 12px;"></td>
+                </tr>
+                <tr>
+                    <td style="width:10%; text-align: center; font-size: 11px; height: 12px;"></td>
+                    <td style="width:40%; text-align: right; font-size: 11px; height: 12px;"></td>
+                    <td style="width:20%; text-align: center; font-size: 11px height: 12px;;"></td>
+                    <td style="width:10%; text-align: center; font-size: 11px; height: 12px;"></td>
+                    <td style="width:20%; text-align: center; font-size: 11px; height: 12px;"></td>
+                </tr>
+            @endif
             @if($showGrandTotal)
+                <tr>
+                    <td colspan="3" style="text-align: right; font-weight: bold; font-size: 12px;"> Total Pieces:</td>
+                    <td colspan="1" style="text-align: center; font-weight: bold; font-size: 12px;">{{ $totalQuantity }}</td>
+                    <td colspan="1" style="text-align: right; font-weight: bold; font-size: 12px;"></td>
+                </tr>
                 <tr>
                     <td colspan="4" style="text-align: right; font-weight: bold; font-size: 12px;">Grand Total:</td>
                     <td colspan="1" style="text-align: right; font-weight: bold; font-size: 12px;">{{ number_format($invoice->amount, 2) }}</td>
@@ -64,21 +85,30 @@
                     <td colspan="4" style="text-align: right; font-weight: bold; font-size: 12px;">Paid Amount:</td>
                     <td colspan="1" style="text-align: right; font-weight: bold; font-size: 12px;">{{ number_format($totalPaid, 2) }}</td>
                 </tr>
-                <tr>
-                    <td colspan="4" style="text-align: right; font-weight: bold; font-size: 12px;">Balance:</td>
-                    <td colspan="1" style="text-align: right; font-weight: bold; font-size: 12px;">{{ number_format($invoice->credit_balance, 2) }}</td>
-                </tr>
+                @if($invoice->credit_balance > 0)
+                    <tr>
+                        <td colspan="4" style="text-align: right; font-weight: bold; font-size: 12px;">To Pay:</td>
+                        <td colspan="1" style="text-align: right; font-weight: bold; font-size: 12px;">{{ number_format($invoice->credit_balance, 2) }}</td>
+                    </tr>
+                @endif
             @endif
         </tbody>
     </table>
-    <div class="footer">
+    @if($showGrandTotal)
+        <div class="leftl">
+            <p><strong>.........................................................</strong></p>
+        </div>
         <div class="leftf">
-            <p>DELIVERY BY</p>
+            <p>DELIVERED BY</p>
+        </div>
+        <div class="rightl">
+            <p><strong>.........................................................</strong></p>
         </div>
         <div class="rightf">
             <p>RECIEVED BY</p>
         </div>
+    @endif
     </div>
-    </div>
+
 </body>
 </html>

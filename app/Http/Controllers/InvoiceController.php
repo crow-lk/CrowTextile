@@ -19,11 +19,12 @@ class InvoiceController extends Controller
         // Calculate the total paid amount
         $totalPaid = $invoice->payments->sum('amount_paid');
 
+        $totalQuantity = $items->where('item_id')->sum('quantity');
 
         // Create a new FPDI instance
         $pdf = new Fpdi();
         $itemCount = $items->count();
-        $itemsPerPage = 5; // Number of items per PDF
+        $itemsPerPage = 4; // Number of items per PDF
         $currentPage = 0;
 
         // Loop until all items are processed
@@ -40,6 +41,7 @@ class InvoiceController extends Controller
                 'invoiceItems' => $chunk, // Pass the current chunk
                 'totalPaid' => $totalPaid,
                 'payments' => $payments,
+                'totalQuantity' => $totalQuantity,
                 'showGrandTotal' => $isLastChunk, // Set to true if this is the last chunk
             ]);
 
