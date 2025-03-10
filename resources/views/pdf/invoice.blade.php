@@ -11,13 +11,9 @@
     <div class="box">
     <div class="header">
         <img src="images/logo.png" alt="logo" class="logo">
-        <div class="sub">
-            <p class="p3">DINULA FASHION</p>
-            <p class="p4">The art of the Kids Garments...</p>
-            <p class="p4">Boralasgamuwa</p>
-            <p class="p4">Email: dinulafashion753@gmail.com</p>
-            <p class="p4">Phone: 0777189978</p>
-        </div>
+        <p class="inv">DINULA FASHION</p>
+        <p class="sub">The art of the Kids Garments...</p>
+        <p class="sub1">Boralasgamuwa | E-mail: <u>dinulafashion753@gmail.com</u> | Tel: +94 777 189 978</p>
     </div>
     <div class="container">
         <div class="left">
@@ -64,13 +60,6 @@
                     <td style="width:10%; text-align: center; font-size: 11px; height: 12px;"></td>
                     <td style="width:40%; text-align: right; font-size: 11px; height: 12px;"></td>
                     <td style="width:20%; text-align: center; font-size: 11px; height: 12px;"></td>
-                    <td style="width:10%; text-align: center; font-size: 11px; height: 12px;"></td>
-                    <td style="width:20%; text-align: center; font-size: 11px; height: 12px;"></td>
-                </tr>
-                <tr>
-                    <td style="width:10%; text-align: center; font-size: 11px; height: 12px;"></td>
-                    <td style="width:40%; text-align: right; font-size: 11px; height: 12px;"></td>
-                    <td style="width:20%; text-align: center; font-size: 11px height: 12px;;"></td>
                     <td style="width:10%; text-align: center; font-size: 11px; height: 12px;"></td>
                     <td style="width:20%; text-align: center; font-size: 11px; height: 12px;"></td>
                 </tr>

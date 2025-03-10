@@ -44,20 +44,22 @@ body {
 }
 
 .inv {
-    font-family: Arial, sans-serif;
-    font-size: 16px;
-    font-weight: bold;
-    top: 40px;
+    font-family: 'Times New Roman', Times, serif;
+    top: 50px;
     right: 150px;
+    font-size: 40px;
     position: fixed;
-    text-align: left;
+    text-align: center;
 }
 
 .sub {
-    top: 60px;
-    right: 130px;
+    top: 120px;
+    right: 205px;
     font-weight: bold;
     position: fixed;
+    font-size: 16px;
+    font-style: italic;
+    text-align: center;
 }
 
 .p3 {
@@ -76,12 +78,12 @@ body {
 
 .sub1 {
     font-family: Arial, sans-serif;
-    font-size: 14px;
+    font-size: 12px;
     font-weight: bold;
-    top: 130px;
-    right: 240px;
+    top: 150px;
+    right: 100px;
     position: fixed;
-    text-align: left;
+    text-align: center;
 }
 
 .left {
