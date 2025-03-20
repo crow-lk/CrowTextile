@@ -51,10 +51,10 @@
                         </td>
                         <td style="width:20%; text-align: right; font-size: 11px;">{{ number_format($item->total_amount, 2) }}</td>
                     </tr>
-                    @foreach($item->item->itemParts as $itemPart) <!-- Loop through item parts -->
+                    @foreach($item->item->itemCosts as $itemCost) <!-- Loop through item Costs -->
                         <tr>
                             <td style="width:10%; text-align: center; font-size: 11px;"></td>
-                            <td style="width:40%; text-align: right; font-size: 11px;">{{ $itemPart->part->name ?? 'N/A' }} - {{ $itemPart->price ?? 'N/A' }}</td>
+                            <td style="width:40%; text-align: right; font-size: 11px;">{{ $itemCost->cost->name ?? 'N/A' }} - {{ $itemCost->price ?? 'N/A' }}</td>
                             <td style="width:20%; text-align: center; font-size: 11px;"></td>
                             <td style="width:10%; text-align: center; font-size: 11px;"></td>
                             <td style="width:20%; text-align: center; font-size: 11px;"></td>

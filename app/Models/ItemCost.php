@@ -5,13 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ItemPart extends Model
+class ItemCost extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'item_id',
-        'part_id',
+        'Cost_id',
         'price',
     ];
 
@@ -20,9 +20,9 @@ class ItemPart extends Model
         return $this->belongsTo(Item::class);
     }
 
-    public function part()
+    public function cost()
     {
-        return $this->belongsTo(Part::class);
+        return $this->belongsTo(Cost::class);
     }
 
     public function invoice()

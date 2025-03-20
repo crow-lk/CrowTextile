@@ -16,9 +16,9 @@ class Item extends Model
         'comment',
     ];
 
-    public function itemParts()
+    public function itemCosts()
     {
-        return $this->hasMany(ItemPart::class);
+        return $this->hasMany(ItemCost::class);
     }
 
     public function invoices()

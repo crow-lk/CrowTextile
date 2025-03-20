@@ -38,8 +38,8 @@ class Invoice extends Model
         return $this->hasMany(Payment::class);
     }
 
-    public function itemParts()
+    public function itemCosts()
     {
-        return $this->hasMany(ItemPart::class); // Relationship with ItemPart
+        return $this->hasMany(ItemCost::class); // Relationship with ItemCost
     }
 }

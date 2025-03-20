@@ -26,12 +26,12 @@ class ItemsResource extends Resource
         return $form->schema([
             Forms\Components\TextInput::make('name')->required(),
             Forms\Components\TextInput::make('qty')->required(),
-            Forms\Components\Repeater::make('item_parts')
-                ->relationship('itemParts')
+            Forms\Components\Repeater::make('item_costs')
+                ->relationship('itemCosts')
                 ->schema([
-                    Forms\Components\Select::make('part_id')
+                    Forms\Components\Select::make('cost_id')
                         ->label('Type')
-                        ->relationship('part', 'name')
+                        ->relationship('cost', 'name')
                         ->required()
                         ->reactive(),
 

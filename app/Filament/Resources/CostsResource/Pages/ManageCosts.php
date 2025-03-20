@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Filament\Resources\PartsResource\Pages;
+namespace App\Filament\Resources\CostsResource\Pages;
 
-use App\Filament\Resources\PartsResource;
+use App\Filament\Resources\CostsResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ManageRecords;
 
-class ManageParts extends ManageRecords
+class ManageCosts extends ManageRecords
 {
-    protected static string $resource = PartsResource::class;
+    protected static string $resource = CostsResource::class;
 
     protected function getHeaderActions(): array
     {

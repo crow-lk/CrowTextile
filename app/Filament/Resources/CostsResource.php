@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\PartsResource\Pages;
-use App\Filament\Resources\PartsResource\RelationManagers;
-use App\Models\Part;
+use App\Filament\Resources\CostsResource\Pages;
+use App\Filament\Resources\CostsResource\RelationManagers;
+use App\Models\Cost;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,9 +13,9 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class PartsResource extends Resource
+class CostsResource extends Resource
 {
-    protected static ?string $model = Part::class;
+    protected static ?string $model = Cost::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-clipboard-document-list';
 
@@ -42,7 +42,7 @@ class PartsResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ManageParts::route('/'),
+            'index' => Pages\ManageCosts::route('/'),
         ];
     }
 }

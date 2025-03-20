@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Part extends Model
+class Cost extends Model
 {
     use HasFactory;
 
@@ -13,9 +13,9 @@ class Part extends Model
         'name',
     ];
 
-    public function itemParts()
+    public function itemCosts()
     {
-        return $this->belongsTo(ItemPart::class);
+        return $this->belongsTo(ItemCost::class);
     }
 
 }

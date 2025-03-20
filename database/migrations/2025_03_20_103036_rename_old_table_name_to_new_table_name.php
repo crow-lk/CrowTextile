@@ -11,12 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('parts', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->timestamps();
-        });
-
+        Schema::rename('parts', 'costs');
+        Schema::rename('item_parts', 'item_costs');
     }
 
     /**
@@ -24,6 +20,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('parts');
+        Schema::rename('costs', 'parts');
+        Schema::rename('item_costs', 'item_parts');
     }
 };
