@@ -90,9 +90,18 @@ body {
     position: fixed;
     font-size: 11px;
 }
+.right{
+    position: fixed;
+    width: 400px;
+    right:60px;
+    font-size: 12px;
+    text-align: center;
+    border:1px solid black;
+}
 
 .left p {
     margin: 5px 0;
+    text-align: left;
 }
 
 table {

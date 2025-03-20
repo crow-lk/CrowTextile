@@ -29,16 +29,11 @@ class ItemsResource extends Resource
             Forms\Components\Repeater::make('item_parts')
                 ->relationship('itemParts')
                 ->schema([
-                    Forms\Components\Select::make('description')
+                    Forms\Components\Select::make('part_id')
                         ->label('Type')
-                        ->options([
-                            'Fabric' => 'Fabric',
-                            'Sewing' => 'Sewing',
-                            'Print' => 'Print',
-                            'Bag' => 'Bag',
-                            'Others' => 'Others',
-                        ])
-                        ->nullable(),
+                        ->relationship('part', 'name')
+                        ->required()
+                        ->reactive(),
 
                     Forms\Components\TextInput::make('price')
                         ->required()

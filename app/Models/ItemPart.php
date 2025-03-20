@@ -11,13 +11,18 @@ class ItemPart extends Model
 
     protected $fillable = [
         'item_id',
-        'description',
+        'part_id',
         'price',
     ];
 
     public function item()
     {
         return $this->belongsTo(Item::class);
+    }
+
+    public function part()
+    {
+        return $this->belongsTo(Part::class);
     }
 
     public function invoice()

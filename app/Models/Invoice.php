@@ -15,6 +15,7 @@ class Invoice extends Model
         'amount',
         'credit_balance',
         'payment_status',
+        'comment',
     ];
 
     public function customer()

@@ -21,6 +21,9 @@
             <p><strong>Date:</strong> {{ $invoice->created_at->format('F j, Y') }}</p>
             <p><strong>Customer Name:</strong> <strong>{{ $invoice->customer->title }}{{ $invoice->customer->name }}</strong></p>
         </div>
+        <div class="right">
+            <p><strong>{{ $invoice->comment }}</strong></p>
+        </div>
     </div>
     <table>
         <thead>
@@ -37,7 +40,10 @@
                     <tr>
                         <td style="width:10%; text-align: center; font-size: 11px;">{{ $index + 1 }}</td>
                         <td style="width:40%; text-align: left; font-size: 11px;">
-                            {{ $item->item->name ?? 'N/A' }}
+                            {{ $item->item->name ?? 'N/A' }} <br/>
+                            @if(!empty($item->comment))
+                                <span style="font-size: 0.8em;"><strong>Note:</strong> {{ $item->comment }}</span>
+                            @endif
                         </td>
                         <td style="width:20%; text-align: right; font-size: 11px;">{{ number_format($item->item->cost, 2) }}</td>
                         <td style="width:10%; text-align: center; font-size: 11px;">
@@ -45,10 +51,10 @@
                         </td>
                         <td style="width:20%; text-align: right; font-size: 11px;">{{ number_format($item->total_amount, 2) }}</td>
                     </tr>
-                    @foreach($item->item->itemParts as $part) <!-- Loop through item parts -->
+                    @foreach($item->item->itemParts as $itemPart) <!-- Loop through item parts -->
                         <tr>
                             <td style="width:10%; text-align: center; font-size: 11px;"></td>
-                            <td style="width:40%; text-align: right; font-size: 11px;">{{ $part->description ?? 'N/A' }} - {{ $part->price ?? 'N/A' }}</td>
+                            <td style="width:40%; text-align: right; font-size: 11px;">{{ $itemPart->part->name ?? 'N/A' }} - {{ $itemPart->price ?? 'N/A' }}</td>
                             <td style="width:20%; text-align: center; font-size: 11px;"></td>
                             <td style="width:10%; text-align: center; font-size: 11px;"></td>
                             <td style="width:20%; text-align: center; font-size: 11px;"></td>

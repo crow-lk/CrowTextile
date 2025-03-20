@@ -85,11 +85,15 @@ class InvoiceResource extends Resource
                             ->label('Amount')
                             ->default(0)
                             ->reactive(),
+                        Forms\Components\TextInput::make('comment')
+                            ->label('Comment'),
                     ])
                     ->reactive() // Make the repeater reactive
                     ->columnSpanFull()->collapsible(),
 
-
+                Forms\Components\TextInput::make('comment')
+                    ->label('Comment')
+                    ->columnSpan('full'),
             ]);
     }
 

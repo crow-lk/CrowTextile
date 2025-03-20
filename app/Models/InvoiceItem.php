@@ -17,6 +17,7 @@ class InvoiceItem extends Model
         'unit_cost',
         'total_amount',
         'quantity',
+        'comment',
     ];
 
     protected static function booted()
