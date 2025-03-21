@@ -52,6 +52,63 @@ class InvoiceResource extends Resource
                             ->required()
                             ->reactive()
                             ->searchable()
+                            ->createOptionForm(function () {
+                                return [
+                                    Forms\Components\TextInput::make('name')->required(),
+                                    Forms\Components\TextInput::make('qty')->required(),
+                                    Forms\Components\Repeater::make('item_costs')
+                                        ->relationship('itemCosts')
+                                        ->schema([
+                                            Forms\Components\Select::make('cost_id')
+                                                ->label('Type')
+                                                ->relationship('cost', 'name')
+                                                ->required()
+                                                ->reactive()
+                                                ->searchable()
+                                                ->createOptionForm(function () {
+                                                    return [
+                                                        Forms\Components\TextInput::make('name')->label('Cost Type')->required(),
+                                                    ];
+                                                })
+                                                ->createOptionUsing(function (array $data) {
+                                                    $cost = \App\Models\Cost::create([
+                                                        'name' => $data['name'],
+                                                    ]);
+                                                    return $cost->id; // Return the item ID
+                                                }),
+
+                                            Forms\Components\TextInput::make('price')
+                                                ->required()
+                                                ->numeric()
+                                                ->reactive()
+                                                ->debounce(2000)
+                                                ->label('Unit Price'),
+                                        ])
+                                        ->reactive() // Make the repeater reactive
+                                        ->afterStateUpdated(function ($state, callable $get, callable $set) {
+                                            // Calculate total based on the quantity and the sum of prices
+                                            $totalPrice = collect($state)->sum(fn($item) => (float)($item['price'] ?? 0));
+
+                                            // Set the total amount and credit balance
+                                            $set('cost',$totalPrice);
+                                        }),
+                                    Forms\Components\TextInput::make('cost')
+                                        ->required()
+                                        ->numeric()
+                                        ->reactive()
+                                        ->label('Unit Cost'),
+                                    Forms\Components\TextInput::make('comment'),
+                                ];
+                            })
+                            ->createOptionUsing(function (array $data) {
+                                $item = Item::create([
+                                    'name' => $data['name'],
+                                    'qty' => $data['qty'],
+                                    'cost' => $data['cost'],
+                                    'comment' => $data['comment'] ?? null,
+                                ]);
+                                return $item->id; // Return the item ID
+                            })
                             ->afterStateUpdated(function ($state, callable $set) {
                                 // Fetch the item based on the selected item_id
                                 $item = Item::find($state);

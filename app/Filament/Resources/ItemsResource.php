@@ -33,7 +33,19 @@ class ItemsResource extends Resource
                         ->label('Type')
                         ->relationship('cost', 'name')
                         ->required()
-                        ->reactive(),
+                        ->reactive()
+                        ->searchable()
+                        ->createOptionForm(function () {
+                            return [
+                                Forms\Components\TextInput::make('name')->label('Cost Type')->required(),
+                            ];
+                        })
+                        ->createOptionUsing(function (array $data) {
+                            $cost = \App\Models\Cost::create([
+                                'name' => $data['name'],
+                            ]);
+                            return $cost->id; // Return the service ID
+                        }),
 
                     Forms\Components\TextInput::make('price')
                         ->required()
