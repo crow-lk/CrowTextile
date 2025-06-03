@@ -50,7 +50,7 @@ class PaymentResource extends Resource
                                     $currentDate = now()->format('Ymd'); // Format: YYYYMMDD
 
                                     // Generate the reference number
-                                    $referenceNumber = 'JME' . $currentDate . $invoice->id; // Concatenate JME, current date, and invoice ID
+                                    $referenceNumber = 'TXT' . $currentDate . $invoice->id; // Concatenate JME, current date, and invoice ID
                                     $set('reference_number', $referenceNumber); // Set the reference number
                                 } else {
                                     $set('amount', null);

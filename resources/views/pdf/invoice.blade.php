@@ -21,9 +21,11 @@
             <p><strong>Date:</strong> {{ $invoice->created_at->format('F j, Y') }}</p>
             <p><strong>Customer Name:</strong> <strong>{{ $invoice->customer->title }}{{ $invoice->customer->name }}</strong></p>
         </div>
-        <div class="right">
-            <p><strong>{{ $invoice->comment }}</strong></p>
-        </div>
+        @if(!empty($invoice->comment))
+            <div class="right">
+                <p><strong>{{ $invoice->comment }}</strong></p>
+            </div>
+        @endif
     </div>
     <table>
         <thead>
@@ -61,11 +63,18 @@
                         </tr>
                     @endforeach
             @endforeach
-            @if(($index + 1) % 4 == 0)
+            @if((($index + 1) % 3 == 0) && (!$showGrandTotal))
                 <tr>
                     <td style="width:10%; text-align: center; font-size: 11px; height: 12px;"></td>
                     <td style="width:40%; text-align: right; font-size: 11px; height: 12px;"></td>
                     <td style="width:20%; text-align: center; font-size: 11px; height: 12px;"></td>
+                    <td style="width:10%; text-align: center; font-size: 11px; height: 12px;"></td>
+                    <td style="width:20%; text-align: center; font-size: 11px; height: 12px;"></td>
+                </tr>
+                <tr>
+                    <td style="width:10%; text-align: center; font-size: 11px; height: 12px;"></td>
+                    <td style="width:40%; text-align: right; font-size: 11px; height: 12px;"></td>
+                    <td style="width:20%; text-align: center; font-size: 11px height: 12px;;"></td>
                     <td style="width:10%; text-align: center; font-size: 11px; height: 12px;"></td>
                     <td style="width:20%; text-align: center; font-size: 11px; height: 12px;"></td>
                 </tr>
