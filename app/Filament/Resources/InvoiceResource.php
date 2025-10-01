@@ -33,124 +33,209 @@ class InvoiceResource extends Resource
     {
         return $form
             ->schema([
-
-                Forms\Components\Select::make('customer_id')
-                    ->label('Customer')
-                    ->relationship('customer', 'name')
-                    ->required()
-                    ->reactive()
-                    ->searchable()
-                    ->columnSpan('full'),
-
-                Forms\Components\Repeater::make('items')
-                    ->relationship('invoiceItems') // Define the relationship
-                    ->reactive()
+                Forms\Components\Section::make('Customer Information')
                     ->schema([
-                        Forms\Components\Select::make('item_id')
-                            ->label('Item')
-                            ->relationship('item', 'name')
+                        Forms\Components\Select::make('customer_id')
+                            ->label('Customer')
+                            ->relationship('customer', 'name')
                             ->required()
                             ->reactive()
                             ->searchable()
-                            ->createOptionForm(function () {
-                                return [
-                                    Forms\Components\TextInput::make('name')->required(),
-                                    Forms\Components\TextInput::make('qty')->required(),
-                                    Forms\Components\Repeater::make('item_costs')
-                                        ->relationship('itemCosts')
-                                        ->schema([
-                                            Forms\Components\Select::make('cost_id')
-                                                ->label('Type')
-                                                ->relationship('cost', 'name')
-                                                ->required()
-                                                ->reactive()
-                                                ->searchable()
-                                                ->createOptionForm(function () {
-                                                    return [
-                                                        Forms\Components\TextInput::make('name')->label('Cost Type')->required(),
-                                                    ];
-                                                })
-                                                ->createOptionUsing(function (array $data) {
-                                                    $cost = \App\Models\Cost::create([
-                                                        'name' => $data['name'],
-                                                    ]);
-                                                    return $cost->id; // Return the item ID
-                                                }),
-
-                                            Forms\Components\TextInput::make('price')
-                                                ->required()
-                                                ->numeric()
-                                                ->reactive()
-                                                ->debounce(2000)
-                                                ->label('Unit Price'),
-                                        ])
-                                        ->reactive() // Make the repeater reactive
-                                        ->afterStateUpdated(function ($state, callable $get, callable $set) {
-                                            // Calculate total based on the quantity and the sum of prices
-                                            $totalPrice = collect($state)->sum(fn($item) => (float)($item['price'] ?? 0));
-
-                                            // Set the total amount and credit balance
-                                            $set('cost',$totalPrice);
-                                        }),
-                                    Forms\Components\TextInput::make('cost')
-                                        ->required()
-                                        ->numeric()
-                                        ->reactive()
-                                        ->label('Unit Cost'),
-                                    Forms\Components\TextInput::make('comment'),
-                                ];
-                            })
-                            ->createOptionUsing(function (array $data) {
-                                $item = Item::create([
-                                    'name' => $data['name'],
-                                    'qty' => $data['qty'],
-                                    'cost' => $data['cost'],
-                                    'comment' => $data['comment'] ?? null,
-                                ]);
-                                return $item->id; // Return the item ID
-                            })
-                            ->afterStateUpdated(function ($state, callable $set) {
-                                // Fetch the item based on the selected item_id
-                                $item = Item::find($state);
-                                if ($item) {
-                                    // Update the unit_cost field with the item's unit cost
-                                    $set('unit_cost', $item->cost);
-                                } else {
-                                    // Reset unit_cost if no item is found
-                                    $set('unit_cost', 0);
-                                }
-                            }),
-                        Forms\Components\TextInput::make('unit_cost')
-                            ->label('Unit Cost')
-                            ->required()
-                            ->debounce(2000)
-                            ->reactive(),
-
-                        Forms\Components\TextInput::make('quantity')
-                            ->label('Quantity')
-                            ->required()
-                            ->reactive()
-                            ->afterStateUpdated(function ($state, callable $set, callable $get) {
-                                // Get the current unit_cost value
-                                $unitCost = $get('unit_cost');
-
-                                // Recalculate total_amount whenever quantity changes
-                                $set('total_amount', $state * $unitCost);
-                            }),
-                        Forms\Components\TextInput::make('total_amount')
-                            ->numeric()
-                            ->label('Amount')
-                            ->default(0)
-                            ->reactive(),
-                        Forms\Components\TextInput::make('comment')
-                            ->label('Comment'),
+                            ->placeholder('Select a customer')
+                            ->columnSpanFull(),
                     ])
-                    ->reactive() // Make the repeater reactive
-                    ->columnSpanFull()->collapsible(),
+                    ->collapsible()
+                    ->columns(1),
 
-                Forms\Components\TextInput::make('comment')
-                    ->label('Comment')
-                    ->columnSpan('full'),
+                Forms\Components\Section::make('Invoice Items')
+                    ->schema([
+                        Forms\Components\Repeater::make('items')
+                            ->relationship('invoiceItems')
+                            ->reactive()
+                            ->schema([
+                                Forms\Components\Grid::make(3)
+                                    ->schema([
+                                        Forms\Components\Select::make('item_id')
+                                            ->label('Item')
+                                            ->relationship('item', 'name')
+                                            ->required()
+                                            ->reactive()
+                                            ->searchable()
+                                            ->placeholder('Select an item')
+                                            ->columnSpan(2)
+                                            ->createOptionForm(function () {
+                                                return [
+                                                    Forms\Components\TextInput::make('name')
+                                                        ->required()
+                                                        ->label('Item Name')
+                                                        ->columnSpanFull(),
+                                                    
+                                                    Forms\Components\TextInput::make('qty')
+                                                        ->required()
+                                                        ->numeric()
+                                                        ->label('Available Quantity'),
+                                                    
+                                                    Forms\Components\Section::make('Cost Breakdown')
+                                                        ->schema([
+                                                            Forms\Components\Repeater::make('item_costs')
+                                                                ->relationship('itemCosts')
+                                                                ->schema([
+                                                                    Forms\Components\Select::make('cost_id')
+                                                                        ->label('Cost Type')
+                                                                        ->relationship('cost', 'name')
+                                                                        ->required()
+                                                                        ->reactive()
+                                                                        ->searchable()
+                                                                        ->createOptionForm(function () {
+                                                                            return [
+                                                                                Forms\Components\TextInput::make('name')
+                                                                                    ->label('Cost Type')
+                                                                                    ->required(),
+                                                                            ];
+                                                                        })
+                                                                        ->createOptionUsing(function (array $data) {
+                                                                            $cost = \App\Models\Cost::create([
+                                                                                'name' => $data['name'],
+                                                                            ]);
+                                                                            return $cost->id;
+                                                                        })
+                                                                        ->columnSpan(1),
+
+                                                                    Forms\Components\TextInput::make('price')
+                                                                        ->required()
+                                                                        ->numeric()
+                                                                        ->reactive()
+                                                                        ->debounce(2000)
+                                                                        ->prefix('LKR')
+                                                                        ->label('Unit Price')
+                                                                        ->columnSpan(1),
+                                                                ])
+                                                                ->columns(2)
+                                                                ->reactive()
+                                                                ->afterStateUpdated(function ($state, callable $get, callable $set) {
+                                                                    $totalPrice = collect($state)->sum(fn($item) => (float)($item['price'] ?? 0));
+                                                                    $set('cost', $totalPrice);
+                                                                })
+                                                                ->columnSpanFull(),
+                                                        ])
+                                                        ->collapsible()
+                                                        ->columnSpanFull(),
+                                                    
+                                                    Forms\Components\TextInput::make('cost')
+                                                        ->required()
+                                                        ->numeric()
+                                                        ->reactive()
+                                                        ->prefix('LKR')
+                                                        ->label('Unit Cost'),
+                                                    
+                                                    Forms\Components\TextInput::make('comment')
+                                                        ->label('Notes')
+                                                        ->columnSpanFull(),
+                                                ];
+                                            })
+                                            ->createOptionUsing(function (array $data) {
+                                                $item = Item::create([
+                                                    'name' => $data['name'],
+                                                    'qty' => $data['qty'],
+                                                    'cost' => $data['cost'],
+                                                    'comment' => $data['comment'] ?? null,
+                                                ]);
+                                                return $item->id;
+                                            })
+                                            ->afterStateUpdated(function ($state, callable $set) {
+                                                $item = Item::find($state);
+                                                if ($item) {
+                                                    $set('unit_cost', $item->cost);
+                                                } else {
+                                                    $set('unit_cost', 0);
+                                                }
+                                            }),
+
+                                        Forms\Components\TextInput::make('quantity')
+                                            ->label('Quantity')
+                                            ->required()
+                                            ->numeric()
+                                            ->reactive()
+                                            ->debounce(1000)
+                                            ->default(1)
+                                            ->minValue(1)
+                                            ->columnSpan(1),
+                                    ]),
+
+                                Forms\Components\Grid::make(3)
+                                    ->schema([
+                                        Forms\Components\TextInput::make('unit_cost')
+                                            ->label('Unit Cost')
+                                            ->required()
+                                            ->numeric()
+                                            ->debounce(2000)
+                                            ->reactive()
+                                            ->prefix('LKR')
+                                            //disabled
+                                            ->disabled()
+                                            ->columnSpan(1),
+
+                                        Forms\Components\TextInput::make('total_amount')
+                                            ->numeric()
+                                            ->label('Total Amount')
+                                            ->default(0)
+                                            ->reactive()
+                                            ->prefix('LKR')
+                                            ->disabled()
+                                            ->dehydrated()
+                                            ->columnSpan(1)
+                                            ->afterStateHydrated(function (callable $set, callable $get, $state) {
+                                                if (empty($state) || $state == 0) {
+                                                    $quantity = (float) ($get('quantity') ?? 0);
+                                                    $unitCost = (float) ($get('unit_cost') ?? 0);
+                                                    $set('total_amount', $quantity * $unitCost);
+                                                }
+                                            }),
+
+                                        Forms\Components\Actions::make([
+                                            Forms\Components\Actions\Action::make('calculate_total')
+                                                ->label('Calculate Total')
+                                                ->icon('heroicon-o-calculator')
+                                                ->color('primary')
+                                                ->action(function (callable $set, callable $get, $livewire) {
+                                                    $quantity = (float) ($get('quantity') ?? 0);
+                                                    $unitCost = (float) ($get('unit_cost') ?? 0);
+                                                    $total = $quantity * $unitCost;
+                                                    $set('total_amount', $total);
+                                                    
+                                                    // Force Livewire to update the UI
+                                                    $livewire->dispatch('refresh-form');
+                                                })
+                                        ])
+                                        ->columnSpan(1)
+                                        ->alignEnd(),
+                                    ]),
+
+                                Forms\Components\Textarea::make('comment')
+                                    ->label('Additional Notes')
+                                    ->rows(2)
+                                    ->columnSpanFull(),
+                            ])
+                            ->reactive()
+                            ->columns(3)
+                            ->defaultItems(1)
+                            ->addActionLabel('Add Another Item')
+                            ->collapsible()
+                            ->itemLabel(fn (array $state): ?string => $state['item_id'] ? Item::find($state['item_id'])?->name : 'New Item')
+                            ->columnSpanFull(),
+                    ])
+                    ->collapsible(),
+
+                Forms\Components\Section::make('Additional Information')
+                    ->schema([
+                        Forms\Components\Textarea::make('comment')
+                            ->label('Invoice Notes')
+                            ->rows(3)
+                            ->placeholder('Add any additional comments or notes about this invoice')
+                            ->columnSpanFull(),
+                    ])
+                    ->collapsible()
+                    ->collapsed(),
             ]);
     }
 
@@ -167,11 +252,11 @@ class InvoiceResource extends Resource
                     ->sortable()
                     ->searchable()
                     ->formatStateUsing(function ($state, $record) {
-                        return $record->customer->title . ' ' . $state; // Assuming customer relationship is loaded
+                        return $record->customer->title . ' ' . $state;
                     }),
                 Tables\Columns\TextColumn::make('amount')
                     ->label('Total Amount')
-                    ->sortable(), // Format as currency
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('payment_status')
                     ->label('Status')
                     ->badge()
@@ -180,11 +265,11 @@ class InvoiceResource extends Resource
                         'Paid' => 'success',
                         'Unpaid' => 'danger',
                     })
-                    ->sortable(), // Format as currency
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Date Created')
                     ->dateTime()
-                    ->sortable(), // Concatenate item details
+                    ->sortable(),
             ])
             ->actions([
                 Tables\Actions\EditAction::make()
