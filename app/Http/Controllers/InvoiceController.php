@@ -14,60 +14,24 @@ class InvoiceController extends Controller
     {
         $invoice = Invoice::with(['invoiceItems', 'payments'])->findOrFail($invoiceId);
         $items = $invoice->invoiceItems;
-        $payments = $invoice->payments; // Get the payments associated with the invoice
+        $payments = $invoice->payments;
 
-        // Calculate the total paid amount
         $totalPaid = $invoice->payments->sum('amount_paid');
-
         $totalQuantity = $items->where('item_id')->sum('quantity');
 
-        // Create a new FPDI instance
-        $pdf = new Fpdi();
         $itemCount = $items->count();
-        $itemsPerPage = 3; // Number of items per PDF
-        $currentPage = 0;
+        $itemsPerPage = 3;
+        $isLastChunk = ($itemsPerPage >= $itemCount);
 
-        // Loop until all items are processed
-        while ($currentPage * $itemsPerPage < $itemCount) {
-            // Get the current chunk of items
-            $chunk = $items->slice($currentPage * $itemsPerPage, $itemsPerPage);
+        $pdf = Pdf::loadView('pdf.invoice', [
+            'invoice' => $invoice,
+            'invoiceItems' => $itemsPerPage >= $itemCount ? $items : $items->slice(0, $itemsPerPage),
+            'totalPaid' => $totalPaid,
+            'payments' => $payments,
+            'totalQuantity' => $totalQuantity,
+            'showGrandTotal' => $isLastChunk,
+        ]);
 
-            // Determine if this is the last chunk
-            $isLastChunk = ($currentPage + 1) * $itemsPerPage >= $itemCount;
-
-            // Generate PDF for the current chunk
-            $pdfChunk = PDF::loadView('pdf.invoice', [
-                'invoice' => $invoice,
-                'invoiceItems' => $chunk, // Pass the current chunk
-                'totalPaid' => $totalPaid,
-                'payments' => $payments,
-                'totalQuantity' => $totalQuantity,
-                'showGrandTotal' => $isLastChunk, // Set to true if this is the last chunk
-            ]);
-
-            // Save the PDF to a temporary file
-            $filePath = public_path("invoice/invoice_{$invoice->id}_part_{$currentPage}.pdf");
-            $pdfChunk->save($filePath);
-
-            // Import the saved PDF into the FPDI instance
-            $pageCount = $pdf->setSourceFile($filePath);
-            for ($pageNo = 1; $pageNo <= $pageCount; $pageNo++) {
-                $templateId = $pdf->importPage($pageNo);
-                $pdf->addPage();
-                $pdf->useTemplate($templateId);
-            }
-
-            $currentPage++; // Move to the next page
-        }
-
-        // Output the combined PDF
-        $outputPath = public_path("invoice/invoice_{$invoice->id}.pdf");
-        $pdf->Output($outputPath, 'F'); // Save the combined PDF to a file
-
-        // Return the combined PDF as a download
-        return response()->file($outputPath, [
-            'Content-Type' => 'application/pdf',
-            'Content-Disposition' => 'inline; filename="invoice_' . $invoice->id . '.pdf"',
-        ])->deleteFileAfterSend(true);
+        return $pdf->stream('invoice_' . $invoice->id . '.pdf');
     }
 }

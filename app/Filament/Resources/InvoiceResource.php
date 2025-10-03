@@ -277,7 +277,6 @@ class InvoiceResource extends Resource
                     ->label('')
                     ->icon('heroicon-o-printer')
                     ->url(fn (Invoice $record) => route('invoices.pdf', $record->id))
-                    ->openUrlInNewTab()
             ]);
     }
 
