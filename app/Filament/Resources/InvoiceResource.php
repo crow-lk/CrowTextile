@@ -272,7 +272,12 @@ class InvoiceResource extends Resource
                     ->sortable(),
             ])
             ->actions([
-                Tables\Actions\EditAction::make()
+                Tables\Actions\EditAction::make(),
+                Tables\Actions\Action::make('print')
+                    ->label('')
+                    ->icon('heroicon-o-printer')
+                    ->url(fn (Invoice $record) => route('invoices.pdf', $record->id))
+                    ->openUrlInNewTab()
             ]);
     }
 
