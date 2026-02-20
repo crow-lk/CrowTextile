@@ -26,9 +26,19 @@ class RollsResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('roll_id')->required(),
-Forms\Components\TextInput::make('weight')->required(),
-Forms\Components\TextInput::make('yardage')->required(),
-Forms\Components\Select::make('color_id')->required()->relationship('colors', 'color_code')
+                Forms\Components\TextInput::make('batch_code')->label('Batch Code')->required(),
+                Forms\Components\TextInput::make('weight')->numeric()->required(),
+                Forms\Components\TextInput::make('yardage')->numeric()->required(),
+                Forms\Components\Select::make('supplier_id')
+                    ->relationship('supplier', 'name')
+                    ->searchable()
+                    ->preload()
+                    ->required(),
+                Forms\Components\Select::make('color_id')
+                    ->relationship('color', 'color_code')
+                    ->searchable()
+                    ->preload()
+                    ->required(),
             ]);
     }
 
@@ -37,9 +47,11 @@ Forms\Components\Select::make('color_id')->required()->relationship('colors', 'c
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('roll_id')->sortable()->searchable(),
-Tables\Columns\TextColumn::make('weight')->sortable()->searchable(),
-Tables\Columns\TextColumn::make('yardage')->sortable()->searchable(),
-Tables\Columns\TextColumn::make('color_id')->sortable()->searchable()
+                Tables\Columns\TextColumn::make('batch_code')->label('Batch Code')->sortable()->searchable(),
+                Tables\Columns\TextColumn::make('weight')->sortable()->searchable(),
+                Tables\Columns\TextColumn::make('yardage')->sortable()->searchable(),
+                Tables\Columns\TextColumn::make('supplier.name')->label('Supplier')->sortable()->searchable(),
+                Tables\Columns\TextColumn::make('color.color_code')->label('Color')->sortable()->searchable(),
             ])
             ->filters([
                 //
