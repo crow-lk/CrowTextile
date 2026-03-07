@@ -16,5 +16,9 @@ class Supplier extends Model
         'email',
         'Address',
     ];
-    
+
+    public function rolls()
+    {
+        return $this->hasMany(Roll::class, 'supplier_id');
+    }
 }

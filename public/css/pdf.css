@@ -1,0 +1,206 @@
+html,
+body {
+    height: 100%; /* Ensure the body takes the full height of the viewport */
+    margin: 0; /* Remove default margin */
+}
+
+body {
+    font-family: "Open Sans", sans-serif;
+    background-image: url("../images/bg.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    color: #333;
+}
+
+
+
+.container {
+    display: flex;
+    padding-left: 60px;
+    padding-right: 60px;
+    width: 100%;
+    margin-top: 260px;
+}
+
+.name {
+    font-size: 24px;
+}
+
+.header {
+    margin-bottom: 10px;
+}
+
+.line {
+    margin-top: 160px;
+}
+
+.logo {
+    top: 50px;
+    left: 70px;
+    height: 180px;
+    width: 180px;
+    position: fixed;
+}
+
+.inv {
+    font-family: 'Times New Roman', Times, serif;
+    top: 50px;
+    right: 150px;
+    font-size: 40px;
+    position: fixed;
+    text-align: center;
+}
+
+.sub {
+    top: 120px;
+    right: 205px;
+    font-weight: bold;
+    position: fixed;
+    font-size: 16px;
+    font-style: italic;
+    text-align: center;
+}
+
+.p3 {
+    font-family: Arial, sans-serif;
+    color: black;
+    font-size: 14px;
+    text-align: left;
+}
+
+.p4 {
+    font-family: Arial, sans-serif;
+    color: black;
+    font-size: 12px;
+    text-align: left;
+}
+
+.sub1 {
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    top: 150px;
+    right: 100px;
+    position: fixed;
+    text-align: center;
+}
+
+.left {
+    position: fixed;
+    font-size: 11px;
+}
+.right{
+    position: fixed;
+    width: 400px;
+    right:60px;
+    font-size: 12px;
+    text-align: center;
+    border:1px solid black;
+}
+
+.left p {
+    margin: 5px 0;
+    text-align: left;
+}
+
+table {
+    width: 85%;
+    border-collapse: collapse;
+    margin-top: 80px;
+    margin-left: 60px;
+}
+
+table,
+th,
+td {
+    border: 1px solid #ddd;
+}
+
+th,
+td {
+    padding: 5px;
+}
+
+th {
+    background-color: black;
+    color: white;
+}
+
+.new {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.total {
+    margin-left: 40px;
+    margin-right: 40px;
+    padding: 5px;
+    background-color: #ddd;
+    color: black;
+    font-size: 12px;
+    font-weight: bold;
+    text-align: right;
+}
+
+.text1 {
+    position: fixed;
+    top: 910px;
+    color: black;
+    margin-left: 40px;
+}
+
+.text2 {
+    position: fixed;
+    top: 980px;
+    color: black;
+    margin-left: 40px;
+}
+
+.h1 {
+    font-size: 14px;
+    line-height: 0.5;
+}
+
+.p1 {
+    font-size: 12px;
+    line-height: 0.5;
+}
+
+.icon {
+    height: 10px;
+    width: 10px;
+}
+
+.rightf {
+    right: 150px;
+    top: 1050px;
+    position: fixed;
+    font-size: 12px;
+    text-align: right;
+}
+
+.leftf {
+    position: fixed;
+    left: 150px;
+    top: 1050px;
+    font-size: 12px;
+    text-align: right;
+}
+
+.leftl {
+    position: fixed;
+    left: 80px;
+    top: 1030px;
+    font-size: 14px;
+    text-align: right;
+}
+
+.rightl {
+    right: 80px;
+    top: 1030px;
+    position: fixed;
+    font-size: 14px;
+    text-align: right;
+}
+
